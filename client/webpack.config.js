@@ -42,7 +42,9 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", {loader: "postcss-loader", options: {postcssOptions: {
+          plugins: [["autoprefixer"]]
+        }}}]
       },
       {
         test: /\.s?css$/,
