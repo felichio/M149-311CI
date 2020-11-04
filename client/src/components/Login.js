@@ -7,7 +7,6 @@ import Background from "./Background";
 function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordconfirm, setPasswordconfirm] = useState("");
 
 
     let history = useHistory();
@@ -29,10 +28,7 @@ function Login(props) {
                 <label htmlFor="password">Password</label>
                 <input type="password" className="form__group--input" id="password" value={password} onChange={ev => setPassword(ev.target.value)}/>
             </div>
-            <div className="form__group">
-                <label htmlFor="c_password">Confirm Password</label>
-                <input type="password" className="form__group--input" id="c_password" value={passwordconfirm} onChange={ev => setPasswordconfirm(ev.target.value)}/>
-            </div>
+            
             <div className="form__group__buttons">
                 <button className="form__group__buttons--button">Login</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
