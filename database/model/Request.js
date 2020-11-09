@@ -1,21 +1,22 @@
 
 
-const request = (line) => {
-    const splitted = line.split(",");
+const request = (line, incident_id) => {
+    
 
-    const creationDate = splitted[0];
-    const status = splitted[1];
-    const completionDate = splitted[2];
-    const serviceRequestNumber = splitted[3];
-    const type = splitted[4];
+    const creation_date = line[0];
+    const status = line[1];
+    const completion_date = line[2] || null;
+    const service_request_number = line[3];
+    const type_of_service = line[4];
 
-    return ({
-        creationDate,
-        status,
-        completionDate: completionDate || null,
-        serviceRequestNumber,
-        type,
-    });
+    const query = {
+        name: "requestinsert",
+        text: "INSERT INTO request(creation_date, status, completion_date, service_request_number, type_of_service, incident_id) values($1, $2, $3, $4, $5, $6)",
+        values: [creation_date, status, completion_date, service_request_number, type_of_service, incident_id]
+    };
+
+    
+    return query;
 };
 
 

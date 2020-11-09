@@ -12,8 +12,16 @@ module.exports = (
         },
         types: {
             abandonedVehicle: "Abandoned Vehicle Complaint",
-            
-            
+            alleyLightsOut: "Alley Light Out",
+            garbageCarts: "Garbage Cart Black Maintenance/Replacement",
+            graffitiRemoval: "Graffiti Removal",
+            potHoles: "Pothole in Street",
+            rodentBaiting: "Rodent Baiting/Rat Complaint",
+            sanitationCode: "Sanitation Code Violation",
+            streetLightsOut: "Street Lights - All/Out",
+            streetLightsOneOut: "Street Light Out",
+            treeDebris: "Tree Debris",
+            treeTrims: "Tree Trim"
         }
     }
 );
