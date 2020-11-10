@@ -18,7 +18,7 @@ module.exports = (
             potHoles: "Pothole in Street",
             rodentBaiting: "Rodent Baiting/Rat Complaint",
             sanitationCode: "Sanitation Code Violation",
-            streetLightsOut: "Street Lights - All/Out",
+            streetLightsAllOut: "Street Lights - All/Out",
             streetLightsOneOut: "Street Light Out",
             treeDebris: "Tree Debris",
             treeTrims: "Tree Trim"
