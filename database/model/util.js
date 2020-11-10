@@ -64,11 +64,11 @@ const read = (reader, type, pool) => {
         if (isConsistent(delimetedLine, type)) {    
             pool.query(locationQuery).then(d => {
                 const location_id = d["rows"][0].location_id;
-                const incidentQuery = incident(type, delimetedLine, location_id);
+                const incidentQuery = incident(type, delimetedLine);
                 // console.log(incidentQuery); 
                 pool.query(incidentQuery).then(d => {
                     const incident_id = d["rows"][0].incident_id;
-                    const requestQuery = request(delimetedLine, incident_id);
+                    const requestQuery = request(delimetedLine, incident_id, location_id);
                     pool.query(requestQuery).then(d => {
                         console.log(counter++);
                     }).catch(e => {/** supress requests if location or incidents supressed or errors occured here  */ console.log(e)})

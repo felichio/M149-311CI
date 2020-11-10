@@ -1,6 +1,6 @@
 
 
-const abandonedVehicle = (line, location_id) => {
+const abandonedVehicle = (line) => {
     const license_plate = line[5] || null;
     const vehicle_model = line[6] || null;
     const vehicle_color = line[7] || null;
@@ -13,11 +13,11 @@ const abandonedVehicle = (line, location_id) => {
 
     const query = {
         name: "abandonedvehicleinsert",
-        text: `INSERT INTO abandoned_vehicle(license_plate, vehicle_model, vehicle_color, current_activity, most_recent_action, days_as_parked, ssa, type_of_service, location_id)
-         values($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        text: `INSERT INTO abandoned_vehicle(license_plate, vehicle_model, vehicle_color, current_activity, most_recent_action, days_as_parked, ssa, type_of_service)
+         values($1, $2, $3, $4, $5, $6, $7, $8)
          returning incident_id
          `,
-        values: [license_plate, vehicle_model, vehicle_color, current_activity, most_recent_action, days_as_parked, ssa, type_of_service, location_id]
+        values: [license_plate, vehicle_model, vehicle_color, current_activity, most_recent_action, days_as_parked, ssa, type_of_service]
     };
 
 
