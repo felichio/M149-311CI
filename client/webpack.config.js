@@ -60,6 +60,9 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "public"),
     index: "html/index.html",
+    proxy: {
+      "/": "http://localhost:8000"
+    },
     historyApiFallback: {
       index: "html/index.html"
     },

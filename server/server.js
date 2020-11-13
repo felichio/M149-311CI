@@ -1,18 +1,23 @@
 const express = require("express");
 const path = require("path");
-
-
-
+const config = require("./config/config");
 
 const app = express();
 
+const authRouter = require("./routers/authRouter");
+
 // use middleware
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.get("/", (req, res) => {
+
+app.use(authRouter);
+
+
+app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "public", "html", "index.html"));
 });
 
 
-app.listen(8080, () => console.log("all good!"));
+app.listen(config.express.port, config.express.hostname, () => console.log(`Web Server listening on port: ${config.express.port}`));

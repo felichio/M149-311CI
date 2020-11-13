@@ -22,7 +22,7 @@ const pool = new pg.Pool({
 // util.read(util.reader("./data/311-service-requests-sanitation-code-complaints.csv"), types.sanitationCode, pool);
 // util.read(util.reader("./data/311-service-requests-street-lights-all-out.csv"), types.streetLightsAllOut, pool);
 // util.read(util.reader("./data/311-service-requests-street-lights-one-out.csv"), types.streetLightsOneOut, pool);
-// util.read(util.reader("./data/311-service-requests-tree-debris.csv"), types.treeDebris, pool);
+util.read(util.reader("./data/311-service-requests-tree-debris.csv"), types.treeDebris, pool);
 // util.read(util.reader("./data/311-service-requests-tree-trims.csv"), types.treeTrims, pool);
 
 
