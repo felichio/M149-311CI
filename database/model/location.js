@@ -2,7 +2,7 @@ const {types} = require("../config/config");
 
 
 
-const location = (line, type, municipality_id, historical_municipality_id) => {
+const location = (line, type) => {
     let street_address = "";
     let zip_code = "";
     let xcoord = "";
@@ -111,11 +111,11 @@ const location = (line, type, municipality_id, historical_municipality_id) => {
 
     query = {
         name: "locationinsert",
-        text: `INSERT INTO locationinfo(street_address, zip_code, xcoord, ycoord, latitude, longitude, municipality_id, historical_municipality_id) 
-        values($1, $2, $3, $4, $5, $6, $7, $8)
+        text: `INSERT INTO locationinfo(street_address, zip_code, xcoord, ycoord, latitude, longitude) 
+        values($1, $2, $3, $4, $5, $6)
         on conflict (latitude, longitude) do update set zip_code = excluded.zip_code returning location_id
         `,
-        values: [street_address, zip_code, xcoord, ycoord, lat, lon, municipality_id, historical_municipality_id]
+        values: [street_address, zip_code, xcoord, ycoord, lat, lon]
     };
 
 

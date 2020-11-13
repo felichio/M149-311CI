@@ -1,6 +1,6 @@
 
 
-const request = (line, incident_id, location_id) => {
+const request = (line, incident_id, location_id, municipality_id, historical_municipality_id) => {
     
 
     const creation_date = line[0];
@@ -11,8 +11,8 @@ const request = (line, incident_id, location_id) => {
 
     const query = {
         name: "requestinsert",
-        text: "INSERT INTO request(creation_date, status, completion_date, service_request_number, type_of_service, incident_id, location_id) values($1, $2, $3, $4, $5, $6, $7)",
-        values: [creation_date, status, completion_date, service_request_number, type_of_service, incident_id, location_id]
+        text: "INSERT INTO request(creation_date, status, completion_date, service_request_number, type_of_service, incident_id, location_id, municipality_id, historical_municipality_id) values($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+        values: [creation_date, status, completion_date, service_request_number, type_of_service, incident_id, location_id, municipality_id, historical_municipality_id]
     };
 
     

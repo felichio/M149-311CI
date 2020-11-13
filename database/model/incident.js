@@ -12,7 +12,7 @@ const treeDebris = require("./treeDebris");
 const treeTrims = require("./treeTrims");
 
 
-const incident = (type, line, location_id) => {
+const incident = (line, type) => {
     if (type === types.abandonedVehicle) {
         return abandonedVehicle(line);
     } else if (type === types.alleyLightsOut) {

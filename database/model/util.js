@@ -61,26 +61,45 @@ const read = (reader, type, pool) => {
     reader.on("line", (line) => {
         const delimetedLine = line.split(",");
         delimetedLine[4] = type; // change type to single value
-        const locationQuery = location(delimetedLine, type);
+        
         // console.log(locationQuery);
         if (isConsistent(delimetedLine, type)) {
+            
+            
+            
+            
+
+            // Promise.all([
+            //     pool.query(municipalityQuery).catch(e => {}),
+            //     pool.query(historicalMunicipalityQuery).catch(e => {}),
+            //     pool.query(locationQuery).catch(e => {}),
+            //     pool.query(incidentQuery).catch(e => {})
+            // ]).then(rows => {
+            //     const municipality_id = rows[0]["rows"][0].municipality_id;
+            //     const historical_municipality_id = rows[1]["rows"][0].historical_municipality_id;
+            //     const location_id = rows[2]["rows"][0].location_id;
+            //     const incident_id = rows[3]["rows"][0].incident_id;
+            //     const requestQuery = request(delimetedLine, incident_id, location_id, municipality_id, historical_municipality_id);
+
+            //     pool.query(requestQuery).then(d => console.log(counter++)).catch(e => {})
+            // });
             const municipalityQuery = municipality(delimetedLine, type);
-            const historicalMunicipalityQuery = historicalMunicipality(delimetedLine, type);
             pool.query(municipalityQuery).then(d => {
                 const municipality_id = d["rows"][0].municipality_id;
+                const historicalMunicipalityQuery = historicalMunicipality(delimetedLine, type);
                 pool.query(historicalMunicipalityQuery).then(d => {
                     const historical_municipality_id = d["rows"][0].historical_municipality_id;
-                    const locationQuery = location(delimetedLine, type, municipality_id, historical_municipality_id);
+                    const locationQuery = location(delimetedLine, type);
                     pool.query(locationQuery).then(d => {
                         const location_id = d["rows"][0].location_id;
-                        const incidentQuery = incident(type, delimetedLine);
+                        const incidentQuery = incident(delimetedLine, type);
                         // console.log(incidentQuery); 
                         pool.query(incidentQuery).then(d => {
                             const incident_id = d["rows"][0].incident_id;
-                            const requestQuery = request(delimetedLine, incident_id, location_id);
+                            const requestQuery = request(delimetedLine, incident_id, location_id, municipality_id, historical_municipality_id);
                             pool.query(requestQuery).then(d => {
                                 console.log(counter++);
-                            }).catch(e => {/** supress requests if location or incidents supressed or errors occured here  */ })
+                            }).catch(e => {/** supress requests if location or incidents supressed or errors occured here  */ console.log(e);})
                         }).catch(e => {/** supress incidents errors or location insertions supressed */ });
                     }).catch(e => {/** supress location errors due to invalid values */ console.log(e);});
                 }).catch(e => {console.log(e)})
