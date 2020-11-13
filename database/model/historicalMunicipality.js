@@ -10,71 +10,71 @@ const historicalMunicipality = (line, type) => {
     let census_tracts = "";
     let wards = "";
     if (type === types.abandonedVehicle) {
-        historical_wards = historical_wards;
-        zip_codes = zip_codes;
-        community_areas = community_areas;
-        census_tracts = census_tracts;
-        wards = wards;
+        historical_wards = null;
+        zip_codes = null;
+        community_areas = null;
+        census_tracts = null;
+        wards = null;
     } else if (type === types.alleyLightsOut) {
-        historical_wards = line[16] || historical_wards;
-        zip_codes = line[17] || zip_codes;
-        community_areas = line[18] || community_areas;
-        census_tracts = line[19] || census_tracts;
-        wards = line[20] || wards;
+        historical_wards = line[16] || null;
+        zip_codes = line[17] || null;
+        community_areas = line[18] || null;
+        census_tracts = line[19] || null;
+        wards = line[20] || null;
     } else if (type === types.garbageCarts) {
-        historical_wards = line[20] || historical_wards;
-        zip_codes = line[21] || zip_codes;
-        community_areas = line[22] || community_areas;
-        census_tracts = line[23] || census_tracts;
-        wards = line[24] || wards;
+        historical_wards = line[20] || null;
+        zip_codes = line[21] || null;
+        community_areas = line[22] || null;
+        census_tracts = line[23] || null;
+        wards = line[24] || null;
     } else if (type === types.graffitiRemoval) {
-        historical_wards = line[19] || historical_wards;
-        zip_codes = line[20] || zip_codes;
-        community_areas = line[21] || community_areas;
-        census_tracts = line[22] || census_tracts;
-        wards = line[23] || wards;
+        historical_wards = line[19] || null;
+        zip_codes = line[20] || null;
+        community_areas = line[21] || null;
+        census_tracts = line[22] || null;
+        wards = line[23] || null;
     } else if (type === types.potHoles) {
-        historical_wards = line[20] || historical_wards;
-        zip_codes = line[21] || zip_codes;
-        community_areas = line[22] || community_areas;
-        census_tracts = line[23] || census_tracts;
-        wards = line[24] || wards;
+        historical_wards = line[20] || null;
+        zip_codes = line[21] || null;
+        community_areas = line[22] || null;
+        census_tracts = line[23] || null;
+        wards = line[24] || null;
     } else if (type === types.rodentBaiting) {
-        historical_wards = line[21] || historical_wards;
-        zip_codes = line[22] || zip_codes;
-        community_areas = line[23] || community_areas;
-        census_tracts = line[24] || census_tracts;
-        wards = line[25] || wards;
+        historical_wards = line[21] || null;
+        zip_codes = line[22] || null;
+        community_areas = line[23] || null;
+        census_tracts = line[24] || null;
+        wards = line[25] || null;
     } else if (type === types.sanitationCode) {
-        historical_wards = line[17] || historical_wards;
-        zip_codes = line[18] || zip_codes;
-        community_areas = line[19] || community_areas;
-        census_tracts = line[20] || census_tracts;
-        wards = line[21] || wards;
+        historical_wards = line[17] || null;
+        zip_codes = line[18] || null;
+        community_areas = line[19] || null;
+        census_tracts = line[20] || null;
+        wards = line[21] || null;
     } else if (type === types.streetLightsAllOut) {
-        historical_wards = line[16] || historical_wards;
-        zip_codes = line[17] || zip_codes;
-        community_areas = line[18] || community_areas;
-        census_tracts = line[19] || census_tracts;
-        wards = line[20] || wards;
+        historical_wards = line[16] || null;
+        zip_codes = line[17] || null;
+        community_areas = line[18] || null;
+        census_tracts = line[19] || null;
+        wards = line[20] || null;
     } else if (type === types.streetLightsOneOut) {
-        historical_wards = historical_wards;
-        zip_codes = zip_codes;
-        community_areas =  community_areas;
-        census_tracts = census_tracts;
-        wards = wards;
+        historical_wards = null;
+        zip_codes = null;
+        community_areas =  null;
+        census_tracts = null;
+        wards = null;
     } else if (type === types.treeDebris) {
-        historical_wards = line[19] || historical_wards;
-        zip_codes = line[20] || zip_codes;
-        community_areas = line[21] || community_areas;
-        census_tracts = line[22] || census_tracts;
-        wards = line[23] || wards;
+        historical_wards = line[19] || null;
+        zip_codes = line[20] || null;
+        community_areas = line[21] || null;
+        census_tracts = line[22] || null;
+        wards = line[23] || null;
     } else if (type === types.treeTrims) {
-        historical_wards = line[17] || historical_wards;
-        zip_codes = line[18] || zip_codes;
-        community_areas = line[19] || community_areas;
-        census_tracts = line[20] || census_tracts;
-        wards = line[21] || wards;
+        historical_wards = line[17] || null;
+        zip_codes = line[18] || null;
+        community_areas = line[19] || null;
+        census_tracts = line[20] || null;
+        wards = line[21] || null;
     }
 
     query = {
