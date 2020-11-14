@@ -3,7 +3,6 @@ const path = require("path");
 const config = require("./config/config");
 
 const app = express();
-
 const authRouter = require("./routers/authRouter");
 
 // use middleware
@@ -12,7 +11,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 
-app.use(authRouter);
+app.use("/api", authRouter);
 
 
 app.get("*", (req, res) => {

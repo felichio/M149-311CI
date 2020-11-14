@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-
+import axios from "axios";
 import {useHistory} from "react-router-dom";
 import Background from "./Background";
-
+import jwt from "jsonwebtoken";
 
 function Login(props) {
     const [username, setUsername] = useState("");
@@ -14,6 +14,46 @@ function Login(props) {
     const back = ev => {
         ev.preventDefault();
         history.push("/");
+    };
+
+    const login = (ev) => {
+        ev.preventDefault();
+        const data = {
+            username,
+            password
+        };
+
+
+        axios.post("/api/login", data, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            
+            if (res.data.error) {
+                // show error
+            } else {
+                
+
+                const token = res.data.token;
+                
+
+                const payload = jwt.decode(token);
+                console.log(payload);
+                
+                
+                
+                props.setProfile(prev => ({
+                    ...prev,
+                    username,
+                    isAuthenticated: true,
+                }));
+            }
+
+            
+
+            
+        }).catch(e => {console.log(e)});
     }
 
 
@@ -30,7 +70,7 @@ function Login(props) {
             </div>
             
             <div className="form__group__buttons">
-                <button className="form__group__buttons--button">Login</button>
+                <button className="form__group__buttons--button" onClick={login}>Login</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
             </div>
         </form>

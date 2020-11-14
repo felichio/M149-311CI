@@ -7,7 +7,8 @@ import Login from "./components/Login";
 import Background from "./components/Background";
 import Stats from "./components/Stats";
 import Register from "./components/Register";
-
+import ProtectedRoute from "./components/protectedRoute";
+import Dashboard from "./components/Dashboard";
 
 const App = function (props) {
     const [profile, setProfile] = useState({
@@ -24,13 +25,17 @@ const App = function (props) {
             <Route path="/login">
                 
                 <Background class="back__image"></Background>
-                <Login></Login>
+                <Login setProfile={setProfile}></Login>
             </Route>
             <Route path="/register">
                 
                 <Background class="back__image"></Background>
                 <Register></Register>
             </Route>
+            <ProtectedRoute {...profile} path="/dashboard">
+                <Dashboard>
+                </Dashboard>
+            </ProtectedRoute>
         </Switch>
     </BrowserRouter>
 }

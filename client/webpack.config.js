@@ -1,20 +1,23 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 const path = require('path');
+const webpack = require("webpack");
 
 module.exports = {
   mode: "development",
-  entry: path.resolve(__dirname, "src", "App.js"),
+  entry: path.join(__dirname, "src", "App.js"),
   output: {
-    path: path.resolve(__dirname, "public"),
-    filename: "js/app_bundle.js",
-    publicPath: "/"
+    path: path.join(__dirname, "public"),
+    filename: "app_bundle.js",
+    
     
   },
   plugins: [
+    
     new HtmlWebpackPlugin({
       title: "RxVChicken",
-      filename: "html/index.html",
+      filename: "index.html",
       template: path.join(__dirname, "config", "template.html"),
       minify: {
           collapseWhitespace: true,
@@ -26,7 +29,7 @@ module.exports = {
       },
   }),
     new MiniCssExtractPlugin({
-    filename: "css/[name].css"
+    filename: "[name].css",
   })],
   module: {
     rules: [
@@ -42,7 +45,8 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", {loader: "postcss-loader", options: {postcssOptions: {
+        
+        use: [{loader: MiniCssExtractPlugin.loader, options: {publicPath: "/"}}, "css-loader", {loader: "postcss-loader", options: {postcssOptions: {
           plugins: [["autoprefixer"]]
         }}}]
       },
@@ -53,19 +57,18 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         loader: "file-loader",
-        options: { outputPath: "css/" }
+        
       }
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"),
-    index: "html/index.html",
+    // contentBase: path.join(__dirname, "public"),
+   
+    publicPath: "/",
     proxy: {
-      "/": "http://localhost:8000"
+      "/api": "http://localhost:8000"
     },
-    historyApiFallback: {
-      index: "html/index.html"
-    },
-    watchContentBase: true
+    historyApiFallback: true,
+    watchContentBase: true,
   }
 };
