@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import Background from "./Background";
@@ -7,8 +7,9 @@ import jwt from "jsonwebtoken";
 function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
-
+    console.log("login");
     let history = useHistory();
     
     const back = ev => {
@@ -31,12 +32,12 @@ function Login(props) {
         }).then(res => {
             
             if (res.data.error) {
-                // show error
+                setError(res.data.error);
             } else {
                 
 
                 const token = res.data.token;
-                
+                window.localStorage.setItem("_token", token);
 
                 const payload = jwt.decode(token);
                 console.log(payload);
@@ -44,17 +45,22 @@ function Login(props) {
                 
                 
                 props.setProfile(prev => ({
-                    ...prev,
-                    username,
-                    isAuthenticated: true,
+                    id: payload.id,
+                    username: payload.username,
+                    email: payload.email,
+                    isAuthenticated: true
                 }));
+
+                history.push("/dashboard");
             }
 
             
 
             
         }).catch(e => {console.log(e)});
-    }
+    };
+
+  
 
 
     return <>
@@ -62,7 +68,10 @@ function Login(props) {
             <Background class="back__font"></Background>
             <div className="form__group">
                 <label htmlFor="username">Username</label>
-                <input type="text" className="form__group--input" id="username" value={username} onChange={ev => setUsername(ev.target.value)}/>
+                <input type="text" className="form__group--input" id="username" value={username} onChange={ev => {
+                    // props.setProfile({username: ev.target.value});
+                    setUsername(ev.target.value);
+                }}/>
             </div>
             <div className="form__group">
                 <label htmlFor="password">Password</label>
@@ -72,6 +81,9 @@ function Login(props) {
             <div className="form__group__buttons">
                 <button className="form__group__buttons--button" onClick={login}>Login</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
+            </div>
+            <div className="form__group">
+                {error ? <div className="error">{error}</div> : undefined}  
             </div>
         </form>
     </>

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "node server/config/clean.js"
+    "clean": "node server/config/clean.js",
+    "fill": "cd database && node --max-old-space-size=4096 bulk_insert.js"
   },
   "browserslist": [
     "last 2 version",
@@ -45,10 +46,13 @@
     "bcrypt": "^5.0.0",
     "buffer": "^6.0.2",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "pg": "^8.4.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "validator": "^13.1.17"
   }
 }

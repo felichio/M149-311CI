@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link, useHistory} from "react-router-dom";
 import "./styles/styles.scss";
 
+import jwt from "jsonwebtoken";
+import moment from "moment";
+import axios from "axios";
 import Login from "./components/Login";
 import Background from "./components/Background";
 import Stats from "./components/Stats";
@@ -12,15 +15,60 @@ import Dashboard from "./components/Dashboard";
 
 const App = function (props) {
     const [profile, setProfile] = useState({
-        username: "",
+        id: null,
+        username: null,
+        email: null,
         isAuthenticated: false
     });
-    return <BrowserRouter>
+
+    const [requests, setRequests] = useState({
+        total: "",
+        opened: "",
+        closed: "",
+    });
+
+    console.log("APp");
+    let history = useHistory();
+    
+    useEffect(() => {
+        const token = window.localStorage.getItem("_token");
+        console.log("check");
+        if (token) {
+            const payload = jwt.decode(token);
+            
+            if (moment().unix() < payload.exp) {
+                setProfile(prev => ({
+                    id: payload.id,
+                    username: payload.username,
+                    email: payload.email,
+                    isAuthenticated: true,
+                }));
+                
+                history.push("/dashboard");
+            } else {
+                setProfile(prev => ({id: null, username: null, email: null, isAuthenticated: false}));
+                history.push("/login");
+            }
+        }
+        
+        
+    }, []);
+
+    useEffect(() => {
+        axios.get("/api/stats").then(d => {
+            setRequests(prev => ({
+                ...d.data,
+            }));
+            console.log("run");
+        });
+    }, []);
+
+    return <>
         <Switch>
             <Route path="/" exact>
                 
                 <Background class="back__image"></Background>
-                <Stats></Stats>
+                <Stats requests={requests}></Stats>
             </Route>
             <Route path="/login">
                 
@@ -32,12 +80,15 @@ const App = function (props) {
                 <Background class="back__image"></Background>
                 <Register></Register>
             </Route>
+            
             <ProtectedRoute {...profile} path="/dashboard">
-                <Dashboard>
+                <Dashboard profile={profile}>
+                    
                 </Dashboard>
             </ProtectedRoute>
+            
         </Switch>
-    </BrowserRouter>
+    </>
 }
 
-ReactDOM.render(<App></App>, document.getElementsByClassName("root")[0]);
+ReactDOM.render(<BrowserRouter><App></App></BrowserRouter>, document.getElementsByClassName("root")[0]);

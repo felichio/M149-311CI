@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "public"),
     filename: "app_bundle.js",
-    
+    publicPath: "/"
     
   },
   plugins: [
@@ -55,16 +55,16 @@ module.exports = {
         loader: "sass-loader"
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        test: /\.(png|svg|jpg|jpeg|gif|eot|svg|ttf|woff|woff2)$/,
         loader: "file-loader",
         
       }
     ]
   },
   devServer: {
-    // contentBase: path.join(__dirname, "public"),
+    contentBase: path.join(__dirname, "public"),
    
-    publicPath: "/",
+    // publicPath: "/",
     proxy: {
       "/api": "http://localhost:8000"
     },

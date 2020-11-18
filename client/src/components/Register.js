@@ -2,20 +2,50 @@ import React, {useState} from "react";
 
 import {useHistory} from "react-router-dom";
 import Background from "./Background";
+import axios from "axios";
 
-
-function Login(props) {
+function Register(props) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordconfirm, setPasswordconfirm] = useState("");
-
+    const [error, setError] = useState(null);
+    console.log("register");
 
     let history = useHistory();
     
     const back = ev => {
         ev.preventDefault();
         history.push("/");
+    };
+
+    const register = ev => {
+        ev.preventDefault();
+        
+        const data = {
+            username,
+            email,
+            password,
+            passwordconfirm
+        };
+
+        axios.post("/api/register", data, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            if (res.data.error) {
+                setError(res.data.error);
+                
+            } else if (res.data.success) {
+                history.push("/login");
+            } else {
+                setError("Try again later");
+            }
+            
+        })
+        
+
     }
 
 
@@ -39,11 +69,14 @@ function Login(props) {
                 <input type="password" className="form__group--input" id="c_password" value={passwordconfirm} onChange={ev => setPasswordconfirm(ev.target.value)}/>
             </div>
             <div className="form__group__buttons">
-                <button className="form__group__buttons--button">Register</button>
+                <button className="form__group__buttons--button" onClick={register}>Register</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
+            </div>
+            <div className="form__group">
+                {error ? <div className="error">{error}</div> : undefined}  
             </div>
         </form>
     </>
 }
 
-export default Login;
+export default Register;
