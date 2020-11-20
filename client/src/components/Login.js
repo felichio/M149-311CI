@@ -8,7 +8,7 @@ function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-
+    const [loginButtonEnabled, setLoginButtonEnabled] = useState(true);
     console.log("login");
     let history = useHistory();
     
@@ -17,8 +17,11 @@ function Login(props) {
         history.push("/");
     };
 
+    useEffect(() => () => {console.log("cleaned");setLoginButtonEnabled(true);}, []);
+
     const login = (ev) => {
         ev.preventDefault();
+        setLoginButtonEnabled(false);
         const data = {
             username,
             password
@@ -50,14 +53,16 @@ function Login(props) {
                     email: payload.email,
                     isAuthenticated: true
                 }));
-
                 history.push("/dashboard");
+                
             }
 
+            setLoginButtonEnabled(true);
+            
             
 
             
-        }).catch(e => {console.log(e)});
+        }).catch(e => {console.log(e), setLoginButtonEnabled(true)});
     };
 
   
@@ -79,7 +84,7 @@ function Login(props) {
             </div>
             
             <div className="form__group__buttons">
-                <button className="form__group__buttons--button" onClick={login}>Login</button>
+                <button className="form__group__buttons--button" onClick={login} disabled={!loginButtonEnabled}>Login</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
             </div>
             <div className="form__group">

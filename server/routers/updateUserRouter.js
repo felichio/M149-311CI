@@ -69,13 +69,14 @@ router.post("/updateuser", authorization, (req, res, next) => {
         
         return bcrypt.hash(password, 12).then(hash => {
             const user = createUser(_tokendata.id, username, email, hash);
-            console.log(user);
-            return client.query(updateUser(user)).then(result => {
-                client.release();
+            const {query, log} = updateUser(user);
+            return client.query(query()).then(result => {
                 if (result.rowCount > 0) {
                     res.status(200).json({
                         success: "User updated successfully"
-                    })
+                    });
+                    
+                    client.query(log()).then(() => client.release()).catch(() => client.release());
                 }
             });
         });

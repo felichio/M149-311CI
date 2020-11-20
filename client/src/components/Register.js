@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {useHistory} from "react-router-dom";
 import Background from "./Background";
@@ -10,6 +10,7 @@ function Register(props) {
     const [password, setPassword] = useState("");
     const [passwordconfirm, setPasswordconfirm] = useState("");
     const [error, setError] = useState(null);
+    const [registerButtonEnabled, setRegisterButtonEnabled] = useState(true);
     console.log("register");
 
     let history = useHistory();
@@ -19,9 +20,12 @@ function Register(props) {
         history.push("/");
     };
 
+
+    useEffect(() => () => setRegisterButtonEnabled(true), []);
+
     const register = ev => {
         ev.preventDefault();
-        
+        setRegisterButtonEnabled(false);
         const data = {
             username,
             email,
@@ -36,14 +40,13 @@ function Register(props) {
         }).then(res => {
             if (res.data.error) {
                 setError(res.data.error);
-                
             } else if (res.data.success) {
                 history.push("/login");
             } else {
                 setError("Try again later");
             }
-            
-        })
+            setRegisterButtonEnabled(true);
+        }).catch(e => {setRegisterButtonEnabled(true)})
         
 
     }
@@ -69,7 +72,7 @@ function Register(props) {
                 <input type="password" className="form__group--input" id="c_password" value={passwordconfirm} onChange={ev => setPasswordconfirm(ev.target.value)}/>
             </div>
             <div className="form__group__buttons">
-                <button className="form__group__buttons--button" onClick={register}>Register</button>
+                <button className="form__group__buttons--button" onClick={register} disabled={!registerButtonEnabled}>Register</button>
                 <button className="form__group__buttons--button" onClick={back}>Back</button>
             </div>
             <div className="form__group">

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
 
@@ -9,12 +9,16 @@ const UpdateUser = props => {
     const [password, setPassword] = useState("");
     const [passwordconfirm, setPasswordconfirm] = useState("");
     const [error, setError] = useState(null);
+    const [updateButtonEnabled, setUpdateButtonEnabled] = useState(true);
 
     let history = useHistory();
 
+    useEffect(() => () => setUpdateButtonEnabled(true), []);
+
+
     const updateInfo = ev => {
         ev.preventDefault();
-
+        setUpdateButtonEnabled(false);
         const token = window.localStorage.getItem("_token");
         const data = {
             username,
@@ -34,9 +38,19 @@ const UpdateUser = props => {
             } else if (res.data.success) {
                 setError(null);
                 window.localStorage.removeItem("_token");
+                props.setProfile(prev => ({
+                    id: null,
+                    username: null,
+                    email: null,
+                    isAuthenticated: false
+                }));
                 history.push("/login");
             }
-        });
+
+            setUpdateButtonEnabled(true);
+        }).catch(e => {
+            setUpdateButtonEnabled(true);
+        })
 
     }
 
@@ -59,7 +73,7 @@ const UpdateUser = props => {
                 <input type="password" className="updateform__group--input" id="c_password" value={passwordconfirm} onChange={ev => setPasswordconfirm(ev.target.value)}/>
             </div>
             <div className="updateform__group__buttons">
-                <button className="updateform__group__buttons--button" onClick={updateInfo}>Update</button>
+                <button className="updateform__group__buttons--button" onClick={updateInfo} disabled={!updateButtonEnabled}>Update</button>
                 {error ? <div className="error">{error}</div> : undefined} 
             </div>
         </form>

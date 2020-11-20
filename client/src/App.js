@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Background from "./components/Background";
 import Stats from "./components/Stats";
 import Register from "./components/Register";
-import ProtectedRoute from "./components/protectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 
 const App = function (props) {
@@ -61,7 +61,7 @@ const App = function (props) {
             }));
             console.log("run");
         });
-    }, []);
+    }, [profile.isAuthenticated]);
 
     return <>
         <Switch>
@@ -82,7 +82,7 @@ const App = function (props) {
             </Route>
             
             <ProtectedRoute {...profile} path="/dashboard">
-                <Dashboard profile={profile}>
+                <Dashboard profile={profile} setProfile={setProfile}>
                     
                 </Dashboard>
             </ProtectedRoute>

@@ -11,15 +11,18 @@ const Navigation = props => {
 
     const signOut = ev => {
         window.localStorage.removeItem("_token");
+        props.setProfile(prev => ({
+            id: null,
+            username: null,
+            email: null,
+            isAuthenticated: false
+        }))
         history.push("/");
     };
 
     const showUpdateUser = ev => {
         setIsDropdownVisible(false);
-        props.setVisibleComponents(prev => ({
-            ...prev,
-            updateUser: true,
-        }));
+        props.setVisibleComponents(prev => prev.map((_, i) => i === 6));
     }
 
     return <div className="navigation">
