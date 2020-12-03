@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
+import retrieveTokenFromLocal from "../util/retrieveTokenFromLocal";
+import deleteTokenFromLocal from "../util/deleteTokenFromLocal";
 
 
 const UpdateUser = props => {
@@ -19,7 +21,8 @@ const UpdateUser = props => {
     const updateInfo = ev => {
         ev.preventDefault();
         setUpdateButtonEnabled(false);
-        const token = window.localStorage.getItem("_token");
+        const token = retrieveTokenFromLocal();
+
         const data = {
             username,
             email,
@@ -37,7 +40,7 @@ const UpdateUser = props => {
                 setError(res.data.error);
             } else if (res.data.success) {
                 setError(null);
-                window.localStorage.removeItem("_token");
+                deleteTokenFromLocal();
                 props.setProfile(prev => ({
                     id: null,
                     username: null,

@@ -81,7 +81,7 @@ const historicalMunicipality = (line, type) => {
         name: "historicalmunicipalityinfoinsert",
         text: `INSERT INTO historical_municipalityinfo(historical_wards, zip_codes, community_areas, census_tracts, wards) 
         values($1, $2, $3, $4, $5)
-        on conflict (historical_wards, zip_codes, community_areas, census_tracts, wards) do update set zip_codes = excluded.zip_codes returning historical_municipality_id
+        on conflict (coalesce(historical_wards, ''), coalesce(zip_codes, ''), coalesce(community_areas, ''), coalesce(census_tracts, ''), coalesce(wards, '')) do update set zip_codes = excluded.zip_codes returning historical_municipality_id
         `,
         values: [historical_wards, zip_codes, community_areas, census_tracts, wards]
     };

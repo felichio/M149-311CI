@@ -1,5 +1,5 @@
 const express = require("express");
-const pg = require("pg");
+
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 const bcrypt = require("bcrypt");
@@ -11,7 +11,7 @@ const insertUser = require("../queries/insertUser");
 const loginlog = require("../queries/loginlog");
 const router = express.Router();
 
-let times = 0;
+
 // @PUBLIC POST /login
 router.post("/login", (req, res) => {
     
@@ -24,7 +24,7 @@ router.post("/login", (req, res) => {
         return client.query(getUserByUsername(username))
                 .then(result => {
                     return [result, client];
-                }).catch(e => console.log(e))
+                }).catch(e => client.release())
     }).then(([result, client]) => {
         if (result.rowCount > 0) {
             const user = createUser(result.rows[0].user_id, result.rows[0].username, result.rows[0].email, result.rows[0].password);
@@ -55,7 +55,7 @@ router.post("/login", (req, res) => {
                 }
             });
         } else {
-            console.log(`runned ${times++}`);
+            
             res.json({
                 error: "Invalid Credentials",
             });

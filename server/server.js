@@ -6,6 +6,8 @@ const app = express();
 const authRouter = require("./routers/authRouter");
 const statsRouter = require("./routers/statsRouter");
 const updateUserRouter = require("./routers/updateUserRouter");
+const logInfoRouter = require("./routers/logInfoRouter");
+const predeterminedRouter = require("./routers/predeterminedRouter");
 
 const pg = require("pg");
 const poolMid = require("./middleware/pool");
@@ -28,7 +30,8 @@ app.use("/api", poolMid(pool));
 app.use("/api", statsRouter);
 app.use("/api", authRouter);
 app.use("/api", updateUserRouter);
-
+app.use("/api", logInfoRouter);
+app.use("/api/predetermined", predeterminedRouter);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "public", "html", "index.html"));
