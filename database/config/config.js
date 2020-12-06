@@ -22,6 +22,19 @@ module.exports = (
             streetLightsOneOut: "Street Light Out",
             treeDebris: "Tree Debris",
             treeTrims: "Tree Trim"
+        },
+        tables: {
+            "Abandoned Vehicle Complaint": "abandoned_vehicle",
+            "Alley Light Out" : "alley_lights_out",
+            "Garbage Cart Black Maintenance/Replacement": "garbage_carts",
+            "Graffiti Removal": "graffiti_removal",
+            "Pothole in Street": "pot_holes",
+            "Rodent Baiting/Rat Complaint": "rodent_baiting",
+            "Sanitation Code Violation": "sanitation_code",
+            "Street Lights - All/Out": "street_lights_all_out",
+            "Street Light Out": "street_lights_one_out",
+            "Tree Debris": "tree_debris",
+            "Tree Trim": "tree_trims"
         }
     }
 );

@@ -1,2 +1,4 @@
 node_modules/
+database/config/credentials.json
 database/data
+server/config/security.json

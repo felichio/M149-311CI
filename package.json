@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "node server/config/clean.js",
-    "fill": "cd database && node --max-old-space-size=4096 bulk_insert.js"
+    "fill": "cd database && node --max-old-space-size=4096 bulk_insert.js",
+    "build": "cd client && npx webpack && cd ../server && node server.js"
   },
   "browserslist": [
     "last 2 version",
