@@ -1228,7 +1228,7 @@ CREATE UNIQUE INDEX idx_historical_municipalityinfo ON public.historical_municip
 -- Name: idx_locationinfo; Type: INDEX; Schema: public; Owner: felix
 --
 
-CREATE UNIQUE INDEX idx_locationinfo ON public.locationinfo USING btree (COALESCE(latitude, (0)::numeric), COALESCE(longitude, (0)::numeric));
+CREATE UNIQUE INDEX idx_locationinfo ON public.locationinfo USING btree (COALESCE(latitude, (1000)::numeric), COALESCE(longitude, (1000)::numeric));
 
 
 --
