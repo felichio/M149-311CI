@@ -914,7 +914,7 @@ ALTER SEQUENCE public.tree_debris_incident_id_seq OWNED BY public.tree_debris.in
 
 CREATE TABLE public.tree_trims (
     location_of_trees character varying(50),
-    type_of_service character varying(50),
+    type_of_service character varying(50) NOT NULL,
     incident_id bigint NOT NULL
 );
 
@@ -1094,7 +1094,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 --
 
 ALTER TABLE ONLY public.abandoned_vehicle
-    ADD CONSTRAINT abandoned_vehicle_pkey PRIMARY KEY (incident_id, type_of_service);
+    ADD CONSTRAINT abandoned_vehicle_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1102,7 +1102,7 @@ ALTER TABLE ONLY public.abandoned_vehicle
 --
 
 ALTER TABLE ONLY public.alley_lights_out
-    ADD CONSTRAINT alley_lights_out_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT alley_lights_out_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1110,7 +1110,7 @@ ALTER TABLE ONLY public.alley_lights_out
 --
 
 ALTER TABLE ONLY public.garbage_carts
-    ADD CONSTRAINT garbage_carts_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT garbage_carts_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1118,7 +1118,7 @@ ALTER TABLE ONLY public.garbage_carts
 --
 
 ALTER TABLE ONLY public.graffiti_removal
-    ADD CONSTRAINT graffiti_removal_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT graffiti_removal_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1150,7 +1150,7 @@ ALTER TABLE ONLY public.municipalityinfo
 --
 
 ALTER TABLE ONLY public.pot_holes
-    ADD CONSTRAINT pot_holes_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT pot_holes_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1166,7 +1166,7 @@ ALTER TABLE ONLY public.request
 --
 
 ALTER TABLE ONLY public.rodent_baiting
-    ADD CONSTRAINT rodent_baiting_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT rodent_baiting_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1174,7 +1174,7 @@ ALTER TABLE ONLY public.rodent_baiting
 --
 
 ALTER TABLE ONLY public.sanitation_code
-    ADD CONSTRAINT sanitation_code_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT sanitation_code_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1182,7 +1182,7 @@ ALTER TABLE ONLY public.sanitation_code
 --
 
 ALTER TABLE ONLY public.street_lights_all_out
-    ADD CONSTRAINT street_lights_all_out_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT street_lights_all_out_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1190,7 +1190,7 @@ ALTER TABLE ONLY public.street_lights_all_out
 --
 
 ALTER TABLE ONLY public.street_lights_one_out
-    ADD CONSTRAINT street_lights_one_out_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT street_lights_one_out_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1198,7 +1198,7 @@ ALTER TABLE ONLY public.street_lights_one_out
 --
 
 ALTER TABLE ONLY public.tree_debris
-    ADD CONSTRAINT tree_debris_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT tree_debris_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1206,7 +1206,7 @@ ALTER TABLE ONLY public.tree_debris
 --
 
 ALTER TABLE ONLY public.tree_trims
-    ADD CONSTRAINT tree_trims_pkey PRIMARY KEY (incident_id);
+    ADD CONSTRAINT tree_trims_pkey PRIMARY KEY (type_of_service, incident_id);
 
 
 --
@@ -1236,6 +1236,38 @@ CREATE UNIQUE INDEX idx_locationinfo ON public.locationinfo USING btree (COALESC
 --
 
 CREATE UNIQUE INDEX idx_municipalityinfo ON public.municipalityinfo USING btree (COALESCE(ward, ''::character varying), COALESCE(police_district, ''::character varying), COALESCE(community_area, ''::character varying));
+
+
+--
+-- Name: request historical_municipalityinfo; Type: FK CONSTRAINT; Schema: public; Owner: felix
+--
+
+ALTER TABLE ONLY public.request
+    ADD CONSTRAINT historical_municipalityinfo FOREIGN KEY (historical_municipality_id) REFERENCES public.historical_municipalityinfo(historical_municipality_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+
+
+--
+-- Name: request locationinfo; Type: FK CONSTRAINT; Schema: public; Owner: felix
+--
+
+ALTER TABLE ONLY public.request
+    ADD CONSTRAINT locationinfo FOREIGN KEY (location_id) REFERENCES public.locationinfo(location_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+
+
+--
+-- Name: request municipalityinfo; Type: FK CONSTRAINT; Schema: public; Owner: felix
+--
+
+ALTER TABLE ONLY public.request
+    ADD CONSTRAINT municipalityinfo FOREIGN KEY (municipality_id) REFERENCES public.municipalityinfo(municipality_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+
+
+--
+-- Name: log user; Type: FK CONSTRAINT; Schema: public; Owner: felix
+--
+
+ALTER TABLE ONLY public.log
+    ADD CONSTRAINT "user" FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
