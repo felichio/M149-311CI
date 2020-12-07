@@ -275,6 +275,7 @@ const UpdateIncident = props => {
                 setTypeOfService(data.type_of_service);
                 changeState(data.type_of_service, data);
             } else {
+                clearData();
                 props.setTextAndShowPopup("Request not found");
             }
         }).catch(() => setFetchButton(true));

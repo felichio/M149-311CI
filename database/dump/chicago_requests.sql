@@ -1280,7 +1280,7 @@ CREATE INDEX "municipality_idIndex" ON public.request USING btree (municipality_
 --
 
 ALTER TABLE ONLY public.request
-    ADD CONSTRAINT historical_municipalityinfo FOREIGN KEY (historical_municipality_id) REFERENCES public.historical_municipalityinfo(historical_municipality_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+    ADD CONSTRAINT historical_municipalityinfo FOREIGN KEY (historical_municipality_id) REFERENCES public.historical_municipalityinfo(historical_municipality_id) ON UPDATE CASCADE NOT VALID;
 
 
 --
@@ -1288,7 +1288,7 @@ ALTER TABLE ONLY public.request
 --
 
 ALTER TABLE ONLY public.request
-    ADD CONSTRAINT locationinfo FOREIGN KEY (location_id) REFERENCES public.locationinfo(location_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+    ADD CONSTRAINT locationinfo FOREIGN KEY (location_id) REFERENCES public.locationinfo(location_id) ON UPDATE CASCADE NOT VALID;
 
 
 --
@@ -1296,7 +1296,7 @@ ALTER TABLE ONLY public.request
 --
 
 ALTER TABLE ONLY public.request
-    ADD CONSTRAINT municipalityinfo FOREIGN KEY (municipality_id) REFERENCES public.municipalityinfo(municipality_id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
+    ADD CONSTRAINT municipalityinfo FOREIGN KEY (municipality_id) REFERENCES public.municipalityinfo(municipality_id) ON UPDATE CASCADE NOT VALID;
 
 
 --
