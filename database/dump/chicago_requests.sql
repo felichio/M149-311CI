@@ -704,10 +704,10 @@ CREATE TABLE public.request (
     completion_date date,
     service_request_number character varying(15),
     type_of_service character varying(50),
-    incident_id bigint NOT NULL,
-    location_id bigint NOT NULL,
-    municipality_id bigint NOT NULL,
-    historical_municipality_id bigint NOT NULL
+    incident_id bigint,
+    location_id bigint,
+    municipality_id bigint,
+    historical_municipality_id bigint
 );
 
 
