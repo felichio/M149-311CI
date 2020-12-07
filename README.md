@@ -28,4 +28,4 @@ npm run fill 1
 }
 ```
 8. Run `npm run build`
-9. Browse to ip:8000 
+9. Browse to localhost:8000 
