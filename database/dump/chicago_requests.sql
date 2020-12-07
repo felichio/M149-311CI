@@ -1234,6 +1234,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: historical_municipality_idIndex; Type: INDEX; Schema: public; Owner: felix
+--
+
+CREATE INDEX "historical_municipality_idIndex" ON public.request USING btree (historical_municipality_id);
+
+
+--
 -- Name: idx_historical_municipalityinfo; Type: INDEX; Schema: public; Owner: felix
 --
 
@@ -1252,6 +1259,20 @@ CREATE UNIQUE INDEX idx_locationinfo ON public.locationinfo USING btree (COALESC
 --
 
 CREATE UNIQUE INDEX idx_municipalityinfo ON public.municipalityinfo USING btree (COALESCE(ward, ''::character varying), COALESCE(police_district, ''::character varying), COALESCE(community_area, ''::character varying));
+
+
+--
+-- Name: location_idIndex; Type: INDEX; Schema: public; Owner: felix
+--
+
+CREATE INDEX "location_idIndex" ON public.request USING btree (location_id);
+
+
+--
+-- Name: municipality_idIndex; Type: INDEX; Schema: public; Owner: felix
+--
+
+CREATE INDEX "municipality_idIndex" ON public.request USING btree (municipality_id);
 
 
 --
