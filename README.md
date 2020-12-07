@@ -16,7 +16,7 @@ Web App (Interaction with Chicago Incidents database)
 }
 ```
 4. Put appropriate csv files inside {root folder of project}/database/data
-5. Run ```npm install inside root folder```
+5. Run ```npm install``` inside root folder
 6. You can fill the database with the corresponding csv file. Run `npm run fill [1-11]`. For example, if you want to insert Abandoned_Vehicle_Requests
   ```
 npm run fill 1  
