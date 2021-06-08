@@ -1,5 +1,5 @@
 # m149-311ci
-Web App (Interaction with Chicago Incidents database)
+Web App with React FE (Interaction with Chicago Incidents database)
 
 
 **Build instructions**
